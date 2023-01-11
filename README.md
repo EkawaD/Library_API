@@ -9,7 +9,7 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
 ```cd app```  
 ```docker-compose up -d```  
 ```docker exec -ti db psql -U postgres postgres < db_data/shadowlib.sql```  
-* Dans un navigateur/Postman/équivalent :
+* Postman/équivalent :
 ```POST 127.0.0.1/api/token```
 
 ```json
@@ -27,7 +27,7 @@ Replace with Admin account for securised endpoints
 
 * Save the "access" token
 
-* Dans un navigateur/Postman/équivalent :
+* Postman/équivalent :
 ```GET 127.0.0.1/api/book```
 
 ```json
