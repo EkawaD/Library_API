@@ -18,7 +18,7 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
     "password": "shadowpassword"  
 }  
 
-Replace with Admin account for securised endpoints
+# Replace with Admin account for securised endpoints
 {  
     "username": "admin", 
     "password": "adminpassword"  
@@ -31,8 +31,8 @@ Replace with Admin account for securised endpoints
 ```GET 127.0.0.1/api/book```
 
 ```json
-Headears: {
-    Authorization: "Bearer [token]"
+"Headears": {
+    "Authorization": "Bearer [token]"
 }
 ```
 
