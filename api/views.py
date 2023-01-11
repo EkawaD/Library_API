@@ -9,7 +9,7 @@ from api.models import Book, Author
 from api.serializers import BookSerializer, AuthorSerializer
 from api.models import CurrentLoan
 from shadowlibrary.api.models import CurrentRent
-# from api.permissions import IsAdminAuthenticated
+from api.permissions import IsAdminAuthenticated
 
 
 class AuthorViewset(ModelViewSet):
@@ -19,7 +19,9 @@ class AuthorViewset(ModelViewSet):
     In this case ModelViewSet is cleaner and shorter than APIView
     """
     serializer_class = AuthorSerializer
-    # permission_classes = [IsAdminAuthenticated]
+
+    # Only Admin can perform CRUD operations on Author
+    permission_classes = [IsAdminAuthenticated]
 
     def get_queryset(self):
         return Author.objects.all()
@@ -56,14 +58,17 @@ class BookViewset(ModelViewSet):
             queryset = queryset.filter(isbn=isbn)
         return queryset
 
-    # def get_permissions(self):
-    #     if self.action in ['update', 'partial_update', 'destroy', 'create']:
-    #         self.permission_classes = [IsAdminAuthenticated, ]
-    #     elif self.action in ['loan', 'return_loan']:
-    #         self.permission_classes = [IsAuthenticated, ]
-    #     else:
-    #         self.permission_classes = [AllowAny, ]
-    #     return super().get_permissions()
+    def get_permissions(self):
+        # Only Admin can perform CUD operations on Book
+        if self.action in ['update', 'partial_update', 'destroy', 'create']:
+            self.permission_classes = [IsAdminAuthenticated, ]
+        # User can perform rent and return_rent operations on Book
+        elif self.action in ['rent', 'return_rent']:
+            self.permission_classes = [IsAuthenticated, ]
+        # Anyone can read and list Book
+        else:
+            self.permission_classes = [AllowAny, ]
+        return super().get_permissions()
 
     @action(detail=True, methods=['get'])
     def rent(self, request, pk):
@@ -72,7 +77,7 @@ class BookViewset(ModelViewSet):
         GET feels more appropriate here but i can be wrong 
         """
         book = self.get_object()
-        if book.stock == 0:
+        if book.stock <= 0:
             raise PermissionDenied("This book can't be rented")
         book.rent()
         CurrentRent.objects.create(user=request.user, book=book)
@@ -88,7 +93,7 @@ class BookViewset(ModelViewSet):
         book.return_loan()
         try:
             # Can return more than one record so we delete the frist found record.
-            CurrentLoan.objects.filter(loaner=request.user, book=book)[0].delete()
+            CurrentRent.objects.filter(loaner=request.user, book=book)[0].delete()
         except IndexError:
             raise PermissionDenied(
                 "You are trying to return a rented book but you didn't rent this one or it has been already returned")
