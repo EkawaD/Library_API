@@ -4,11 +4,9 @@ Exemple d'une API permettant d'administrer une bibliothèque pour le compte de S
 
 ## Get started
 
-Admin account
-
-username : admin
-
-password: adminpassword
+Admin account  
+username : admin  
+password: adminpassword  
 
 ## Steps to reproduce
 
