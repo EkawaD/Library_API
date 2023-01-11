@@ -8,6 +8,10 @@ Admin account
 username : admin  
 password: adminpassword  
 
+User account  
+username : shadow  
+password: shadowpassword  
+
 ## Steps to reproduce
 
 0. ```django-admin startproject shadowlibrary```
@@ -24,5 +28,8 @@ password: adminpassword
 9. ```docker exec -ti shadowlibrary_web_1 python manage.py makemigrations```
 10. ```docker exec -ti shadowlibrary_web_1 python manage.py migrate```
 11. ```docker exec -ti shadowlibrary_web_1 python manage.py createsuperuser```
-12. Create serializers for our models in serializers.py
-13. Create an API Viewset for our models in views.py
+12. Créer des serializers pour nos models in serializers.py
+13. Créer des vues pour nos models in views.py
+14. Créer un fichier permissions.py dans note application API pour créer des permissions personalisées
+=> Si le projet doit comporter d'autres application, on pourrait séparer la logique de l'authentification/permissions dans une autre app nommé "auth"
+15. Faire correspondre nos vues aux bon endpoints dans les fichiers shadowlibrary/urls.py et api/urls.py
