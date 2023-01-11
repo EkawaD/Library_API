@@ -4,13 +4,51 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
 
 ## Get started
 
-Admin account  
-username : admin  
-password: adminpassword  
+* Pour tester cette application :  
+```git clone https://github.com/EkawaD/Library_API.git app```
+```cd app```
+```docker-compose up -d```
+```docker exec -ti db psql -U postgres postgres < db_data/shadowlib.sql```
+* Dans un navigateur/Postman/équivalent :
+```POST 127.0.0.1/api/token```
 
-User account  
-username : shadow  
-password: shadowpassword  
+```{  
+    "username": "shadow", 
+    "password": "shadowpassword"  
+}  
+
+Replace with Admin account for securised endpoints
+{  
+    "username": "admin", 
+    "password": "adminpassword"  
+}  
+```
+
+* Save the "access" token
+
+* Dans un navigateur/Postman/équivalent :
+```GET 127.0.0.1/api/book```
+
+```Headears: {
+    Authorization: "Bearer [token]"
+}
+```
+
+## Endpoints
+
+GET /admin, permissions: Admin
+POST /api/token/, permissions: Any
+POST /api/token/refresh, permissions: Any
+
+GET /api/book/, permissions: Any
+GET /api/book/1, permissions: Any
+POST /api/book/, permissions: Admin
+PUT/PATCH/DELETE /api/book/1, permissions: Admin
+GET /api/book/1/rent, permissions: User
+GET /api/book/1/return_rent, permissions: User
+
+GET/POST /api/author, permissions: Admin
+GET/PUT/PATCH/DELETE /api/author/1, permissions: Admin
 
 ## Steps to reproduce
 
@@ -25,15 +63,15 @@ password: shadowpassword
  ```django-admin startapp api```
 7. Créer des fichier urls.py, serializers.py
 8. Ajouter nos modèles (voir UML.png)
-9. ```docker exec -ti shadowlibrary_web_1 python manage.py makemigrations```
-10. ```docker exec -ti shadowlibrary_web_1 python manage.py migrate```
-11. ```docker exec -ti shadowlibrary_web_1 python manage.py createsuperuser```
+9. ```docker exec -ti django python manage.py makemigrations```
+10. ```docker exec -ti django python manage.py migrate```
+11. ```docker exec -ti django python manage.py createsuperuser```
 12. Créer des serializers pour nos models in api/serializers.py
 13. Créer des vues pour nos models in api/views.py
 14. Créer un fichier api/permissions.py pour créer des permissions personalisées
 => Si le projet doit comporter d'autres application, on pourrait séparer la logique de l'authentification/permissions dans une autre app nommé "auth"
 15. Faire correspondre nos vues aux bon endpoints dans les fichiers shadowlibrary/urls.py et api/urls.py
-16. Dump la base de donnée ```docker exec -ti shadowlibrary_db_1 pg_dump postgres -U postgres postgres > shadowlib.sql```
+16. Dump la base de donnée ```docker exec -ti db pg_dump -U postgres postgres > shadowlib.sql```
 
 ## TODO
 

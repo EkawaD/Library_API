@@ -3,6 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
+    container_name: django
     command: python /app/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -12,6 +13,7 @@ services:
       - db
   db:
     image: postgres:13
+    container_name: db
     volumes:
       - ./db_data:/db_data
     environment:
