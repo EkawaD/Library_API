@@ -38,19 +38,19 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
 
 ## Endpoints
 
-GET /admin, permissions: Admin
-POST /api/token/, permissions: Any
-POST /api/token/refresh, permissions: Any
+GET /admin, permissions: Admin  
+POST /api/token/, permissions: Any  
+POST /api/token/refresh, permissions: Any  
 
-GET /api/book/, permissions: Any
-GET /api/book/1, permissions: Any
-POST /api/book/, permissions: Admin
-PUT/PATCH/DELETE /api/book/1, permissions: Admin
-GET /api/book/1/rent, permissions: User
-GET /api/book/1/return_rent, permissions: User
+GET /api/book/, permissions: Any  
+GET /api/book/1, permissions: Any  
+POST /api/book/, permissions: Admin  
+PUT/PATCH/DELETE /api/book/1, permissions: Admin  
+GET /api/book/1/rent, permissions: User  
+GET /api/book/1/return_rent, permissions: User  
 
-GET/POST /api/author, permissions: Admin
-GET/PUT/PATCH/DELETE /api/author/1, permissions: Admin
+GET/POST /api/author, permissions: Admin  
+GET/PUT/PATCH/DELETE /api/author/1, permissions: Admin  
 
 ## Steps to reproduce
 
