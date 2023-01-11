@@ -24,3 +24,5 @@ password: adminpassword
 9. ```docker exec -ti shadowlibrary_web_1 python manage.py makemigrations```
 10. ```docker exec -ti shadowlibrary_web_1 python manage.py migrate```
 11. ```docker exec -ti shadowlibrary_web_1 python manage.py createsuperuser```
+12. Create serializers for our models in serializers.py
+13. Create an API Viewset for our models in views.py
