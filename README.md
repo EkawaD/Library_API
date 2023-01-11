@@ -33,7 +33,7 @@ password: shadowpassword
 14. Créer un fichier api/permissions.py pour créer des permissions personalisées
 => Si le projet doit comporter d'autres application, on pourrait séparer la logique de l'authentification/permissions dans une autre app nommé "auth"
 15. Faire correspondre nos vues aux bon endpoints dans les fichiers shadowlibrary/urls.py et api/urls.py
-16. Dump la base de donnée ```docker exec -ti shadowlibrary_db_1 pg_dump postgres > shadow_library.sql```
+16. Dump la base de donnée ```docker exec -ti shadowlibrary_db_1 pg_dump postgres -U postgres postgres > shadowlib.sql```
 
 ## TODO
 
