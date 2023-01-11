@@ -12,7 +12,8 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
 * Dans un navigateur/Postman/équivalent :
 ```POST 127.0.0.1/api/token```
 
-```{  
+```json
+{
     "username": "shadow", 
     "password": "shadowpassword"  
 }  
@@ -29,7 +30,8 @@ Replace with Admin account for securised endpoints
 * Dans un navigateur/Postman/équivalent :
 ```GET 127.0.0.1/api/book```
 
-```Headears: {
+```json
+Headears: {
     Authorization: "Bearer [token]"
 }
 ```
