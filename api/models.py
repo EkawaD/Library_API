@@ -21,7 +21,7 @@ class Book(models.Model):
         author (author_id): ForeignKey to Author model. Each Book can only have one author. 
         title (str): Store the title of the book. We're using a Charfield to validate the max_length at db level 
         isbn (str): Unique identifier of our book. Should be unique and varchar(17) (https://stackoverflow.com/a/66837719/14986199)
-        isbn (str): Store publication date
+        published_at (str): Store publication date
         stock (str): Track the current stock of a book in our library. We could have the same book in multiple copies.
     """
     author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=False, null=False)
@@ -70,4 +70,4 @@ class CurrentRent(models.Model):
         """
         Human readable string representation
         """
-        return self.book.title + " loaned by " + self.loaner.username
+        return self.book.title + " loaned by " + self.user.username

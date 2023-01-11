@@ -7,20 +7,21 @@ class AuthorSerializer(ModelSerializer):
 
     class Meta:
         model = Author
-        fields = "__all__"  # name
+        fields = "__all__"  # ["name"]
 
 
 class BookSerializer(ModelSerializer):
     """
     Serialize our book model.
-    we serialize author (wich is an id in our model) to the corresponding name to user readability.
-    we could have go with author = AuthorSerializer if we want to show the id or others author attributes.
+    we serialize author (wich is an id in our model) to the corresponding name for user readability.
+    we could have go with author = AuthorSerializer if we want to show the id or others author's attributes.
     """
     author = serializers.CharField(source="author.name")
 
     def create(self, validated_data):
         """ 
-        Create an author if it doesn't exist in our database. Otherwise link tthe author to the book.
+        Create an author if it doesn't exist in our database. 
+        Otherwise link the existing author to the book.
         """
         author = validated_data.pop('author')
         author_instance, created = Author.objects.get_or_create(name=author["name"])
@@ -29,7 +30,8 @@ class BookSerializer(ModelSerializer):
 
     def update(self, instance, validated_data):
         """ 
-        Create an author if it doesn't exist in our database. Otherwise link tthe author to the book.
+        Create an author if it doesn't exist in our database. 
+        Otherwise link the existing author to the book.
         TODO We could refactor the duplicate logic here
         """
         author = validated_data.pop('author')

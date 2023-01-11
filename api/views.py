@@ -7,8 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from api.models import Book, Author
 from api.serializers import BookSerializer, AuthorSerializer
-from api.models import CurrentLoan
-from shadowlibrary.api.models import CurrentRent
+from api.models import CurrentRent
 from api.permissions import IsAdminAuthenticated
 
 
@@ -28,17 +27,13 @@ class AuthorViewset(ModelViewSet):
 
 
 class BookViewset(ModelViewSet):
-    """ 
-    Book View
-    We want to be able to perform all CRUD operations on our Book + two actions.
-    In this case ModelViewSet is cleaner and shorter than APIView
-    """
     serializer_class = BookSerializer
 
     def get_queryset(self):
         """
-        We add support for http parameters here.
+        We add support for http parameters here. For complex query we may need a separate endpoint.
         Users can perform a query on the author/title/isbn to retrieve the wanted book
+        ex: /api/book/?author=J.R.R Tolkien
         Returns:
             filtered queryset
         """
@@ -74,7 +69,7 @@ class BookViewset(ModelViewSet):
     def rent(self, request, pk):
         """
         /api/book/{id}/rent
-        GET feels more appropriate here but i can be wrong 
+        GET feels the most appropriate here but i can be wrong 
         """
         book = self.get_object()
         if book.stock <= 0:
@@ -87,13 +82,13 @@ class BookViewset(ModelViewSet):
     def return_rent(self, request, pk):
         """
         /api/book/{id}/return_rent
-        GET feels more appropriate here but i can be wrong 
+        GET feels the most appropriate here but i can be wrong 
         """
         book = self.get_object()
-        book.return_loan()
+        book.return_rent()
         try:
             # Can return more than one record so we delete the frist found record.
-            CurrentRent.objects.filter(loaner=request.user, book=book)[0].delete()
+            CurrentRent.objects.filter(user=request.user, book=book)[0].delete()
         except IndexError:
             raise PermissionDenied(
                 "You are trying to return a rented book but you didn't rent this one or it has been already returned")
