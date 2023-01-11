@@ -17,8 +17,9 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
     "username": "shadow", 
     "password": "shadowpassword"  
 }  
-
-# Replace with Admin account for securised endpoints
+ 
+ 
+// Admin account for securised endpoints
 {  
     "username": "admin", 
     "password": "adminpassword"  
