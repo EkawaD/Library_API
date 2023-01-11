@@ -5,10 +5,10 @@ Exemple d'une API avec Django et django-rest-framework permettant d'administrer 
 ## Get started
 
 * Pour tester cette application :  
-```git clone https://github.com/EkawaD/Library_API.git app```
-```cd app```
-```docker-compose up -d```
-```docker exec -ti db psql -U postgres postgres < db_data/shadowlib.sql```
+```git clone https://github.com/EkawaD/Library_API.git app```  
+```cd app```  
+```docker-compose up -d```  
+```docker exec -ti db psql -U postgres postgres < db_data/shadowlib.sql```  
 * Dans un navigateur/Postman/équivalent :
 ```POST 127.0.0.1/api/token```
 
